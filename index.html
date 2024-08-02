@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>link re-directer</h1>
+        <p id="error-message"></p>
+    </body>
+    <script>
+        window.addEventListener("load", (event) => {
+            try {
+                const params = new Proxy(new URLSearchParams(window.location.search), {
+                    get: (searchParams, prop) => searchParams.get(prop),
+                });
+                let url = atob(params.link)
+                if (params.link) {
+                    window.location.replace(url);
+                } else {
+                    document.querySelector("#error-message").innerText = "ERROR: missing 'link' in query parameters"
+                }
+            } catch (error) {
+                console.error(error);
+                document.querySelector("#error-message").innerText = `ERROR: ${error}`
+            }
+
+        });
+    </script>
+</html>
