@@ -5,6 +5,8 @@
         <p id="error-message"></p>
     </body>
     <script>
+        let TIMEOUT_SECONDS = 3;
+
         window.addEventListener("load", (event) => {
             try {
                 const params = new Proxy(new URLSearchParams(window.location.search), {
@@ -12,7 +14,9 @@
                 });
                 let url = atob(params.link)
                 if (params.link) {
-                    window.location.replace(url);
+                    setTimeout(()=>{
+                        window.location.replace(url);
+                    }, TIMEOUT_SECONDS*1000)
                 } else {
                     document.querySelector("#error-message").innerText = "ERROR: missing 'link' in query parameters"
                 }
